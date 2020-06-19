@@ -19,7 +19,7 @@ func newAllocator() *IDAllocator {
 	freeList := make(chan uint16, TunnelMaxID)
 
 	var id uint16
-	for id = 1; id <= TunnelMaxID; id++ {
+	for id = 1; id < TunnelMaxID; id++ {
 		freeList <- id
 	}
 

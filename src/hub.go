@@ -20,7 +20,7 @@ type Hub struct {
 func (hub *Hub) Send(id uint16, data []byte) bool {
 	err := hub.tunnel.WritePacket(id, data)
 	if err != nil {
-		Error("link[%d] write to %s failed, err: %s", id, hub.tunnel, err.Error())
+		Error("link[%d] write to %v failed, err: %s", id, hub.tunnel, err.Error())
 		return false
 	}
 	return true
@@ -28,7 +28,7 @@ func (hub *Hub) Send(id uint16, data []byte) bool {
 
 func (hub *Hub) onCtrl(cmd TCmd) {
 	if cmd.Cmd == HEARTBEAT {
-		Debug("%s recv heartbeat: %d", hub.tunnel, cmd.ID)
+		Debug("tunnel[%v] recv heartbeat: %d", hub.tunnel, cmd.ID)
 	} else {
 		Info("link[%d] recv cmd: %d", cmd.ID, cmd.Cmd)
 	}
@@ -53,7 +53,7 @@ func (hub *Hub) onCtrl(cmd TCmd) {
 	case LINK_CLOSE_SEND:
 		link.writeClose()
 	default:
-		Error("link[%d] recv unknown cmd: %v", id, cmd)
+		Error("link[%d] RECV unknown cmd: %v", id, cmd)
 	}
 }
 
@@ -103,7 +103,7 @@ func (hub *Hub) Start() {
 
 	//tunnel disconnect, so reset all link
 	hub.resetAllLink()
-	Log("hub[%s] quit...", hub.tunnel)
+	Log("hub[%v] quit...", hub.tunnel)
 }
 
 //Close hub close

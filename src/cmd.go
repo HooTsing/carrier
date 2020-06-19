@@ -21,9 +21,9 @@ func (hub *Hub) sendCmd(id uint16, Cmd uint8) bool {
 	binary.Write(buf, binary.LittleEndian, &cmd)
 
 	if Cmd == HEARTBEAT {
-		Debug("%s send heartbeat: %d", hub.tunnel, id)
+		Debug("tunnel[%v] SEND heartbeat: %d", hub.tunnel, id)
 	} else {
-		Info("link[%d] send cmd: %d", id, Cmd)
+		Info("link[%d] SEND cmd: %d", id, Cmd)
 	}
 
 	return hub.Send(0, buf.Bytes())

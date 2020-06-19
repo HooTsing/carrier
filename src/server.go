@@ -33,7 +33,7 @@ func (svr *TServer) handleConn(conn net.Conn) {
 
 	//check token VerifyCipherBlock
 	if !auth.VerifyCipherBlock(token) {
-		Error("tunnel[%v] verify token failed, err is: %s", tunnel)
+		Error("tunnel[%v] verify token failed, token is: %s", tunnel, token)
 		return
 	}
 
@@ -46,6 +46,7 @@ func (svr *TServer) handleConn(conn net.Conn) {
 func (svr *TServer) Start() error {
 	defer svr.listener.Close()
 	for {
+		Info("server accept connection, waiting...")
 		conn, err := svr.listener.Accept()
 		if err != nil {
 			netErr, ok := err.(net.Error)

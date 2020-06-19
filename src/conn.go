@@ -44,8 +44,8 @@ func (tun *Tunnel) WritePacket(linkid uint16, data []byte) error {
 	}
 
 	header := THeader{
-		linkID:  linkid,
-		bodyLen: uint16(len(data)),
+		LinkID:  linkid,
+		BodyLen: uint16(len(data)),
 	}
 	err := binary.Write(tun, binary.LittleEndian, header)
 	if err != nil {
@@ -79,18 +79,18 @@ func (tun *Tunnel) ReadPacket() (linkid uint16, data []byte, err error) {
 		return
 	}
 
-	if h.bodyLen > TunnelPacketSize {
+	if h.BodyLen > TunnelPacketSize {
 		Error("tunnel.Read: packet too large")
 		return
 	}
 
-	data = MsgPool.Get()[:h.bodyLen]
+	data = MsgPool.Get()[:h.BodyLen]
 	_, err = io.ReadFull(tun, data)
 	if err != nil {
 		Error("ReadPacket io.ReadFull() falied, err: %s", err)
 		return
 	}
-	linkid = h.linkID
+	linkid = h.LinkID
 	return
 }
 
