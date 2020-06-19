@@ -46,6 +46,7 @@ func main() {
 	secret := flag.String("secret", "the answer to life, the universe and everything", "carrier secret")
 	number := flag.Uint("number", 0, "0 if work as server")
 	flag.IntVar(&src.Heartbeat, "heartbeat", 10, "tunnel heartbeat interval")
+	flag.UintVar(&src.LogLevel, "log", 1, "log level")
 
 	flag.Usage = usage
 	flag.Parse()
